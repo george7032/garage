@@ -1,0 +1,144 @@
+<?php
+$servername = "sql109.epizy.com";
+$username = "epiz_33860754";
+$password = "KqTAP3lJsbip";
+$dbname = "epiz_33860754_final_project";
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Check if form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $plate_number = $_POST['plateNumber'];
+    $category = $_POST['category'];
+    $entry_time = $_POST['entryTime'];
+    $exit_time = $_POST['exitTime'];
+    $amout = $_POST['amout'];
+
+    // Save data to database
+    $sql = "INSERT INTO parked_vehicles (plateNumber, category, entryTime,exitTime,amount)
+    VALUES ('$plate_number', '$category', '$entry_time',' $exit_time','$amout')";
+
+    if (mysqli_query($conn, $sql)) {
+        mysqli_close($conn);
+        header("Location: Home page.php"); // redirect to home.php
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="parking attendant/exit.css">
+  <title>Document</title>
+</head>
+<body>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("https://cdn.pixabay.com/photo/2017/11/10/00/20/riga-2935035_960_720.jpg");
+    background-size: cover;
+  }
+
+  .logo {
+        display: block;
+        margin: 0 auto;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+      }
+      .logo img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 70%;
+}
+
+  form {
+    
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   background-color: lightgray;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"],
+  select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  .container {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    background-image: url("https://cdn.pixabay.com/photo/2017/11/10/00/20/riga-2935035_960_720.jpg");
+  }
+</style>
+<div class="logo"></div>
+
+
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+<div class="logo">
+  <img src="/images/images.jpg" alt="">
+</div>
+  <label for="plate_number">Plate Number:</label>
+  <input type="text" id="plate_number" name="plateNumber" required>
+  <br>
+  <label for="category">Category:</label>
+  <select id="category" name="category" required>
+    <option value="car">Car</option>
+    <option value="motorcycle">Motorcycle</option>
+    <option value="bus">Bus</option>
+  </select>
+  <br>
+  <label for="entry_time">Time In:</label>
+  <input type="datetime-local" id="entry_time" name="entryTime" required>
+  <br>
+  <input type="submit" value="Save" id="save-button">
+</form>
+
+
+<script src="script.js"></script>
+</body>
+</html>

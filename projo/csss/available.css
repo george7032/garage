@@ -1,0 +1,14 @@
+.slot-btn {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 25px;
+    text-align: center;
+    vertical-align: middle;
+    margin: 5px;
+    cursor: pointer;
+  }
+  .slot-btn.booked {
+    background-color: green;
+    pointer-events: none;
+  }
